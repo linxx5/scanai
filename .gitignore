@@ -1,0 +1,87 @@
+# Scanai .gitignore — "do not pack" list for git/GitHub
+# Each line is a rule. # = comment. Works for this repo only.
+# Comprehensive starter (docs + common app stacks). Delete stacks you don't use.
+
+# --- Secrets — NEVER commit ---
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.keystore
+secrets/
+credentials.json
+serviceAccount*.json
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Editors / IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Logs / temp / local ---
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+
+# --- Node.js (web / React Native / Expo) ---
+node_modules/
+dist/
+build/
+.next/
+.expo/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env/
+.pytest_cache/
+.mypy_cache/
+
+# --- Flutter / Dart ---
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+*.snap
+
+# --- Java / Android ---
+*.class
+*.apk
+*.aab
+.gradle/
+local.properties
+
+# --- .NET / C# ---
+bin/
+obj/
+*.user
+.vs/
+
+# --- Mobile / offline models (large, download instead) ---
+*.tflite
+*.onnx
+*.bin
+models/*.pt
+
+# --- Local uploads / test docs (keep repo small) ---
+uploads/
+downloads/
+test-docs/output/
+
+# --- Keep these (do NOT ignore) ---
+# SCANAI.md, README.md, source code in app/, api/
