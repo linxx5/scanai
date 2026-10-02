@@ -1,0 +1,17 @@
+:root {
+  --scanai-primary: #0B6B4F;
+  --scanai-on-primary: #FFFFFF;
+  --scanai-secondary: #4A6572;
+  --scanai-error: #BA1A1A;
+  --scanai-warning: #B7791F;
+  --scanai-success: #0B6B4F;
+  --scanai-surface: #FCFDF7;
+  --scanai-on-surface: #191C1A;
+  --scanai-ready: #0B6B4F;
+  --scanai-needs-review: #B7791F;
+  --scanai-failed: #BA1A1A;
+  --scanai-radius-sm: 8px;
+  --scanai-radius-md: 12px;
+  --scanai-radius-lg: 16px;
+  --scanai-font: Roboto, Inter, system-ui, sans-serif;
+}
