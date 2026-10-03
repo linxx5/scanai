@@ -1,0 +1,13 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Theme is fresh
+        run: |
+          python3 tools/generate_themes.py
+          git diff --exit-code -- app/lib/theme/theme.dart web/tokens.css
+      - name: Docker files parse
+        run: docker compose --project-directory infra config --quiet

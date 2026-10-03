@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scanai — Design System Preview</title>
+<link rel="stylesheet" href="../web/tokens.css">
+<style>
+  :root {
+    --scanai-primary: #0B6B4F; --scanai-on-primary: #FFFFFF;
+    --scanai-secondary: #4A6572; --scanai-error: #BA1A1A;
+    --scanai-warning: #B7791F; --scanai-success: #0B6B4F;
+    --scanai-surface: #FCFDF7; --scanai-on-surface: #191C1A;
+    --scanai-ready: #0B6B4F; --scanai-needs-review: #B7791F; --scanai-failed: #BA1A1A;
+    --scanai-radius-sm: 8px; --scanai-radius-md: 12px; --scanai-radius-lg: 16px;
+    --scanai-font: Roboto, Inter, system-ui, sans-serif;
+  }
+  body { font-family: var(--scanai-font); background: var(--scanai-surface); color: var(--scanai-on-surface); margin: 0; padding: 32px; }
+  h1 { font-size: 28px; margin: 0 0 4px; } h2 { font-size: 20px; margin: 32px 0 12px; }
+  p.sub { color: #5f6368; margin: 0 0 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .swatch { border-radius: var(--scanai-radius-md); padding: 16px; color: #fff; min-height: 90px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .swatch.light { color: var(--scanai-on-surface); border: 1px solid #e0e0e0; }
+  .swatch small { opacity: .85; font-size: 12px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn { border: 0; border-radius: var(--scanai-radius-md); padding: 12px 20px; font-size: var(--scanai-font-size, 14px); font-weight: 600; cursor: pointer; }
+  .btn-primary { background: var(--scanai-primary); color: var(--scanai-on-primary); }
+  .btn-secondary { background: transparent; color: var(--scanai-primary); border: 2px solid var(--scanai-primary); }
+  .btn-danger { background: var(--scanai-error); color: #fff; }
+  .chip { border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #fff; }
+  .chip.ready { background: var(--scanai-ready); } .chip.review { background: var(--scanai-needs-review); } .chip.failed { background: var(--scanai-failed); }
+  .card { background: #fff; border: 1px solid #e6e6e6; border-radius: var(--scanai-radius-lg); padding: 16px; max-width: 340px; }
+  .banner { border-radius: var(--scanai-radius-md); padding: 12px 16px; margin: 8px 0; font-weight: 600; }
+  .banner.offline { background: #FFF8E1; border: 1px solid var(--scanai-needs-review); color: #5d4037; }
+  .banner.sync { background: #E8F5E9; border: 1px solid var(--scanai-ready); color: #1b5e20; }
+  .type-sample { border-left: 4px solid var(--scanai-primary); padding-left: 12px; margin: 8px 0; }
+</style>
+</head>
+<body>
+  <h1>Scanai — Design System Preview</h1>
+  <p class="sub">Source: <code>design/tokens.json</code> → <code>web/tokens.css</code> + <code>app/lib/theme/theme.dart</code> · Edit JSON then run <code>py tools/generate_themes.py</code></p>
+
+  <h2>1 · Colors</h2>
+  <div class="grid">
+    <div class="swatch" style="background:var(--scanai-primary)">Primary<small>--scanai-primary</small></div>
+    <div class="swatch" style="background:var(--scanai-secondary)">Secondary<small>--scanai-secondary</small></div>
+    <div class="swatch" style="background:var(--scanai-error)">Error<small>--scanai-error</small></div>
+    <div class="swatch" style="background:var(--scanai-warning)">Warning<small>--scanai-warning</small></div>
+    <div class="swatch" style="background:var(--scanai-success)">Success<small>--scanai-success</small></div>
+    <div class="swatch light" style="background:var(--scanai-surface)">Surface<small>--scanai-surface</small></div>
+  </div>
+
+  <h2>2 · Status chips (batch review)</h2>
+  <div class="row">
+    <span class="chip ready">✓ Ready</span>
+    <span class="chip review">⚠ Needs review</span>
+    <span class="chip failed">✕ Failed</span>
+  </div>
+
+  <h2>3 · Typography</h2>
+  <div class="type-sample" style="font-size:22px;font-weight:700">Title Large 22 — Beneficiary Forms</div>
+  <div class="type-sample" style="font-size:14px">Body Medium 14 — Ibrahim Musa · 08012345678 · Lafia</div>
+  <div class="type-sample" style="font-size:14px;font-weight:600">Label Large 14 — SCAN · REVIEW · EXPORT</div>
+
+  <h2>4 · Buttons</h2>
+  <div class="row">
+    <button class="btn btn-primary">Scan document</button>
+    <button class="btn btn-secondary">Import</button>
+    <button class="btn btn-danger">Delete local</button>
+  </div>
+
+  <h2>5 · Components</h2>
+  <div class="row">
+    <div class="card"><strong>INV-2045.pdf</strong><br><small>2 pages · Ready · 12 KB</small><br><br><button class="btn btn-primary">Open</button></div>
+    <div class="card"><strong>Batch — 500 forms</strong><br><small>486 ready · 11 review · 3 failed</small><br><br><span class="chip review">⚠ 11 to review</span></div>
+  </div>
+  <div class="banner offline">⚠ Offline — 3 docs will sync when reconnected</div>
+  <div class="banner sync">● Online — synced just now</div>
+</body>
+</html>
