@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scanai Form — fill (no login)</title>
+<style>
+  :root { --p: #0B6B4F; --bg: #FCFDF7; --tx: #191C1A; }
+  body { font-family: Roboto, Inter, system-ui, sans-serif; background: var(--bg); color: var(--tx); margin: 0; padding: 24px; }
+  .card { background: #fff; border: 1px solid #e3e3e3; border-radius: 12px; padding: 16px; max-width: 520px; margin: 0 auto; }
+  label { display: block; font-weight: 600; margin: 12px 0 4px; }
+  input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 15px; }
+  button { background: var(--p); color: #fff; border: 0; border-radius: 10px; padding: 12px 18px; font-weight: 700; margin-top: 16px; }
+  .note { color: #5f6368; font-size: 13px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h2>Beneficiary Form (demo)</h2>
+    <p class="note">No login needed to fill. Share by link or QR. Same API as app.</p>
+    <label>Name *</label><input id="name">
+    <label>Phone *</label><input id="phone">
+    <label>LGA</label><input id="lga">
+    <label>Age</label><input id="age" type="number">
+    <button onclick="send()">Send</button>
+    <p class="note" id="msg"></p>
+  </div>
+<script>
+async function send() {
+  const body = {
+    name: document.getElementById('name').value,
+    phone: document.getElementById('phone').value,
+    lga: document.getElementById('lga').value,
+    age: document.getElementById('age').value,
+  };
+  if (!body.name || !body.phone) {
+    document.getElementById('msg').textContent = 'Missing. Fill name + phone.';
+    return;
+  }
+  try {
+    await fetch('http://localhost:3001/events', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name: 'form_response', props: body}),
+    });
+    document.getElementById('msg').textContent = 'Saved. Thank you.';
+  } catch (e) {
+    document.getElementById('msg').textContent = 'Offline. Kept on device — will send later.';
+  }
+}
+</script>
+</body>
+</html>
