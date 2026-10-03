@@ -22,8 +22,8 @@
   <h2>Pick a plan</h2>
   <p class="note" id="who"></p>
   <div class="plan"><h3>Free</h3><div class="price">₦0</div><p>5 scans · offline · no login.</p><button class="ghost" onclick="pick('free')">Stay free</button></div>
-  <div class="plan hot"><h3>Pro ⭐</h3><div class="price">Monthly</div><p>Big batch · Cloud AI · Sync · Excel export.</p><button onclick="pay('pro')">Pay with Paystack (test)</button></div>
-  <div class="plan"><h3>Business</h3><div class="price">Monthly</div><p>Teams · shared folders · forms dashboard.</p><button onclick="pay('business')">Pay with Paystack (test)</button></div>
+  <div class="plan hot"><h3>Pro ⭐</h3><div class="price">₦2,500 / month</div><p>Big batch · Cloud AI · Sync · Excel export.</p><button onclick="pay('pro')">Pay with Paystack (test)</button></div>
+  <div class="plan"><h3>Business</h3><div class="price">₦8,000 / month</div><p>Teams · shared folders · forms dashboard.</p><button onclick="pay('business')">Pay with Paystack (test)</button></div>
   <p class="note">Test mode now: no real money. Live later with Paystack.</p>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="paystack.key.js" onerror="/* no local key: test mode */"></script>
@@ -42,11 +42,16 @@ function pay(plan) {
     location.href = 'index.html';
     return;
   }
-  // Live: Paystack popup. Server checks the payment in /pay/webhook.
+  // Live: Paystack popup. Amounts are in kobo (100 kobo = 1 naira).
+  // Change these to your real prices in Paystack dashboard later.
+  const PRICES = { pro: 250000, business: 800000 }; // Pro 2,500 naira, Business 8,000 naira (test)
   PaystackPop.setup({
     key: key,
     email: email,
-    plan: plan === 'business' ? undefined : undefined, // set your plan code here
+    amount: PRICES[plan] || 250000,
+    currency: 'NGN',
+    ref: 'scanai-' + plan + '-' + Date.now(),
+    metadata: { plan: plan },
     callback: function () {
       localStorage.setItem('scanai_plan', plan);
       alert('Paid OK: ' + plan + ' unlocked.');
