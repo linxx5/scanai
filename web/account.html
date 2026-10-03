@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scanai — Account</title>
+<style>
+  :root { --p: #1DA1F2; --bg: #F2FAFF; --tx: #10222E; }
+  * { box-sizing: border-box; }
+  body { font-family: Roboto, Inter, system-ui, sans-serif; background: var(--bg); color: var(--tx); margin: 0; padding: 16px; max-width: 520px; margin-inline: auto; }
+  a.back { color: var(--p); font-weight: 700; text-decoration: none; }
+  .card { background: #fff; border-radius: 14px; padding: 20px; margin-top: 12px; }
+  input { width: 100%; padding: 14px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 10px; min-height: 48px; margin-top: 8px; }
+  button { width: 100%; background: var(--p); color: #fff; border: 0; border-radius: 12px; padding: 14px; font-size: 16px; font-weight: 800; min-height: 52px; margin-top: 12px; cursor: pointer; }
+  .note { color: #5f6b76; font-size: 13px; margin-top: 10px; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← Home</a>
+  <div class="card" id="box">
+    <h2>Unlock paid features</h2>
+    <p class="note">Batch 500 · Cloud AI · Sync · Teams. Free scans never need this.</p>
+    <input id="email" type="email" placeholder="you@mail.com">
+    <button onclick="join()">Make free account / Log in</button>
+    <p class="note" id="msg">We save your mail only on this phone for now (demo). Server login comes with the app.</p>
+  </div>
+<script>
+const box = document.getElementById('box');
+const saved = localStorage.getItem('scanai_email');
+if (saved) showPlans(saved);
+function join() {
+  const v = document.getElementById('email').value.trim();
+  if (!v || !v.includes('@')) {
+    document.getElementById('msg').textContent = 'Type a good mail, e.g. you@mail.com.';
+    return;
+  }
+  localStorage.setItem('scanai_email', v);
+  showPlans(v);
+}
+function showPlans(email) {
+  box.innerHTML = '<h2>Hello, ' + email + '</h2>'
+    + '<p class="note">Pick a plan to unlock paid features.</p>'
+    + '<button onclick="location.href=\'pricing.html\'">See plans</button>';
+}
+</script>
+</body>
+</html>

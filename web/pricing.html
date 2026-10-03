@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scanai — Plans</title>
+<style>
+  :root { --p: #1DA1F2; --bg: #F2FAFF; --tx: #10222E; }
+  * { box-sizing: border-box; }
+  body { font-family: Roboto, Inter, system-ui, sans-serif; background: var(--bg); color: var(--tx); margin: 0; padding: 16px; max-width: 640px; margin-inline: auto; }
+  a.back { color: var(--p); font-weight: 700; text-decoration: none; }
+  .plan { background: #fff; border-radius: 14px; padding: 18px; margin-top: 12px; border: 2px solid #e3eef5; }
+  .plan.hot { border-color: var(--p); }
+  .plan h3 { margin: 0 0 4px; } .price { font-size: 22px; font-weight: 800; }
+  button { width: 100%; background: var(--p); color: #fff; border: 0; border-radius: 12px; padding: 14px; font-size: 16px; font-weight: 800; min-height: 52px; margin-top: 10px; cursor: pointer; }
+  .ghost { background: #fff; color: var(--p); border: 2px solid var(--p); }
+  .note { color: #5f6b76; font-size: 13px; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← Home</a>
+  <h2>Pick a plan</h2>
+  <p class="note" id="who"></p>
+  <div class="plan"><h3>Free</h3><div class="price">₦0</div><p>5 scans · offline · no login.</p><button class="ghost" onclick="pick('free')">Stay free</button></div>
+  <div class="plan hot"><h3>Pro ⭐</h3><div class="price">Monthly</div><p>Big batch · Cloud AI · Sync · Excel export.</p><button onclick="pay('pro')">Pay with Paystack (test)</button></div>
+  <div class="plan"><h3>Business</h3><div class="price">Monthly</div><p>Teams · shared folders · forms dashboard.</p><button onclick="pay('business')">Pay with Paystack (test)</button></div>
+  <p class="note">Test mode now: no real money. Live later with Paystack.</p>
+<script>
+document.getElementById('who').textContent =
+  'Signed in as: ' + (localStorage.getItem('scanai_email') || 'guest') + ' · plan: ' + (localStorage.getItem('scanai_plan') || 'free');
+function pick(p) { localStorage.setItem('scanai_plan', p); location.href = 'index.html'; }
+function pay(plan) {
+  // Live: Paystack inline here with public key. Test: mark plan locally.
+  localStorage.setItem('scanai_plan', plan);
+  alert('Test OK: ' + plan + ' unlocked on this phone. Live Paystack comes with the app.');
+  location.href = 'index.html';
+}
+</script>
+</body>
+</html>

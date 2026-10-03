@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scanai — Scan</title>
+<style>
+  :root { --p: #1DA1F2; --bg: #F2FAFF; --tx: #10222E; }
+  * { box-sizing: border-box; }
+  body { font-family: Roboto, Inter, system-ui, sans-serif; background: var(--bg); color: var(--tx); margin: 0; padding: 16px; max-width: 640px; margin-inline: auto; }
+  a.back { color: var(--p); font-weight: 700; text-decoration: none; }
+  .btn { display: block; width: 100%; border: 0; border-radius: 14px; padding: 18px; font-size: 18px; font-weight: 800; min-height: 60px; margin-top: 12px; cursor: pointer; }
+  .scan { background: var(--p); color: #fff; }
+  .imp { background: #fff; color: var(--p); border: 3px solid var(--p); }
+  #thumbs img { width: 110px; border-radius: 10px; border: 1px solid #ddd; margin: 6px 6px 0 0; }
+  .note { color: #5f6b76; font-size: 14px; margin-top: 12px; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← Home</a>
+  <h2>Scan a paper</h2>
+  <button class="btn scan" onclick="document.getElementById('cam').click()">📷 Open camera</button>
+  <button class="btn imp" onclick="document.getElementById('gal').click()">🖼 Gallery / files</button>
+  <input type="file" id="cam" accept="image/*" capture="environment" style="display:none" onchange="got(this)">
+  <input type="file" id="gal" accept="image/*,.pdf" multiple style="display:none" onchange="got(this)">
+  <p class="note" id="msg">Free: 5 scans. Saved on this phone. No login.</p>
+  <div id="thumbs"></div>
+<script>
+let count = 0;
+function got(input) {
+  const msg = document.getElementById('msg');
+  const thumbs = document.getElementById('thumbs');
+  if (!input.files || !input.files.length) return;
+  count += input.files.length;
+  const left = Math.max(0, 5 - count);
+  msg.textContent = 'Saved ' + count + ' on this phone. Free left: ' + left + '.';
+  if (left === 0) msg.textContent += ' Make an account for more.';
+  Array.from(input.files).slice(0, 6).forEach(f => {
+    if (!f.type.startsWith('image/')) return;
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(f);
+    thumbs.appendChild(img);
+  });
+  if (left === 0) setTimeout(() => location.href = 'account.html', 1200);
+  input.value = '';
+}
+</script>
+</body>
+</html>
