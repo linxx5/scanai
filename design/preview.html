@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../web/tokens.css">
 <style>
   :root {
-    --scanai-primary: #0B6B4F; --scanai-on-primary: #FFFFFF;
+    --scanai-primary: #1DA1F2; --scanai-on-primary: #FFFFFF;
     --scanai-secondary: #4A6572; --scanai-error: #BA1A1A;
     --scanai-warning: #B7791F; --scanai-success: #0B6B4F;
     --scanai-surface: #FCFDF7; --scanai-on-surface: #191C1A;
@@ -62,12 +62,37 @@
   <div class="type-sample" style="font-size:14px">Body Medium 14 — Ibrahim Musa · 08012345678 · Lafia</div>
   <div class="type-sample" style="font-size:14px;font-weight:600">Label Large 14 — SCAN · REVIEW · EXPORT</div>
 
-  <h2>4 · Buttons</h2>
+  <h2>4 · Buttons (live — try them)</h2>
   <div class="row">
-    <button class="btn btn-primary">Scan document</button>
-    <button class="btn btn-secondary">Import</button>
-    <button class="btn btn-danger">Delete local</button>
+    <button class="btn btn-primary" onclick="document.getElementById('scanInput').click()">Scan document</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('importInput').click()">Import</button>
+    <button class="btn btn-danger" onclick="clearPicked()">Delete local</button>
   </div>
+  <input type="file" id="scanInput" accept="image/*" capture="environment" style="display:none" onchange="picked(this, 'Camera scan')">
+  <input type="file" id="importInput" accept="image/*,.pdf" multiple style="display:none" onchange="picked(this, 'Imported')">
+  <p class="sub" id="pickedMsg">No file yet. Scan opens the camera. Import opens gallery / files.</p>
+  <div class="row" id="thumbs"></div>
+<script>
+function picked(input, kind) {
+  const msg = document.getElementById('pickedMsg');
+  const thumbs = document.getElementById('thumbs');
+  if (!input.files || input.files.length === 0) { msg.textContent = 'Cancelled. Nothing picked.'; return; }
+  msg.textContent = kind + ': ' + Array.from(input.files).map(f => f.name).join(', ');
+  thumbs.innerHTML = '';
+  Array.from(input.files).slice(0, 4).forEach(f => {
+    if (!f.type.startsWith('image/')) return;
+    const img = document.createElement('img');
+    img.style.cssText = 'width:120px;border-radius:12px;border:1px solid #e0e0e0';
+    img.src = URL.createObjectURL(f);
+    thumbs.appendChild(img);
+  });
+  input.value = '';
+}
+function clearPicked() {
+  document.getElementById('pickedMsg').textContent = 'Cleared. Pick a file to try again.';
+  document.getElementById('thumbs').innerHTML = '';
+}
+</script>
 
   <h2>5 · Components</h2>
   <div class="row">

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class ScanaiTokens {
-  static const primary = Color(0xFF0B6B4F);
+  static const primary = Color(0xFF1DA1F2);
   static const onPrimary = Color(0xFFFFFFFF);
   static const secondary = Color(0xFF4A6572);
   static const error = Color(0xFFBA1A1A);
