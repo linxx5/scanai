@@ -13,6 +13,7 @@
   input, select, textarea { width: 100%; padding: 14px 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; min-height: 48px; }
   button { background: var(--p); color: #fff; border: 0; border-radius: 12px; padding: 14px 18px; font-weight: 700; font-size: 16px; margin-top: 16px; width: 100%; min-height: 52px; }
   .note { color: #5f6368; font-size: 13px; }
+  a.back { color: var(--p); font-weight: 700; text-decoration: none; display: inline-block; margin-bottom: 8px; }
   @media (min-width: 600px) {
     body { padding: 32px; }
     button { width: auto; }
@@ -21,6 +22,8 @@
 </style>
 </head>
 <body>
+  <div style="max-width:560px;margin:0 auto;">
+  <a class="back" href="../index.html">← Home</a>
   <div class="card">
     <h2>Beneficiary Form (demo)</h2>
     <p class="note">No login needed to fill. Share by link or QR. Same API as app.</p>
@@ -30,6 +33,7 @@
     <label>Age</label><input id="age" type="number">
     <button onclick="send()">Send</button>
     <p class="note" id="msg"></p>
+  </div>
   </div>
 <script>
 async function send() {
