@@ -25,15 +25,35 @@
   <div class="plan hot"><h3>Pro ⭐</h3><div class="price">Monthly</div><p>Big batch · Cloud AI · Sync · Excel export.</p><button onclick="pay('pro')">Pay with Paystack (test)</button></div>
   <div class="plan"><h3>Business</h3><div class="price">Monthly</div><p>Teams · shared folders · forms dashboard.</p><button onclick="pay('business')">Pay with Paystack (test)</button></div>
   <p class="note">Test mode now: no real money. Live later with Paystack.</p>
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="paystack.key.js" onerror="/* no local key: test mode */"></script>
 <script>
 document.getElementById('who').textContent =
   'Signed in as: ' + (localStorage.getItem('scanai_email') || 'guest') + ' · plan: ' + (localStorage.getItem('scanai_plan') || 'free');
 function pick(p) { localStorage.setItem('scanai_plan', p); location.href = 'index.html'; }
 function pay(plan) {
-  // Live: Paystack inline here with public key. Test: mark plan locally.
-  localStorage.setItem('scanai_plan', plan);
-  alert('Test OK: ' + plan + ' unlocked on this phone. Live Paystack comes with the app.');
-  location.href = 'index.html';
+  const key = window.SCANAI_PAYSTACK_PUBLIC_KEY || '';
+  const email = localStorage.getItem('scanai_email') || 'guest@scanai.local';
+  const bad = !key || key.includes('XXXX');
+  if (bad || typeof PaystackPop === 'undefined') {
+    // Test mode: no key yet. Mark plan on this phone only.
+    localStorage.setItem('scanai_plan', plan);
+    alert('Test OK: ' + plan + ' unlocked on this phone. Add your key to pay real.');
+    location.href = 'index.html';
+    return;
+  }
+  // Live: Paystack popup. Server checks the payment in /pay/webhook.
+  PaystackPop.setup({
+    key: key,
+    email: email,
+    plan: plan === 'business' ? undefined : undefined, // set your plan code here
+    callback: function () {
+      localStorage.setItem('scanai_plan', plan);
+      alert('Paid OK: ' + plan + ' unlocked.');
+      location.href = 'index.html';
+    },
+    onClose: function () {},
+  }).openIframe();
 }
 </script>
 </body>

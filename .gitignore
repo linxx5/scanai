@@ -6,6 +6,8 @@
 .env
 .env.*
 !.env.example
+infra/.env
+web/paystack.key.js
 *.pem
 *.key
 *.p12
